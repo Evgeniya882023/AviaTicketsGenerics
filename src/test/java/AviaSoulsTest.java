@@ -98,6 +98,51 @@ public class AviaSoulsTest {
         int actual = ticket1.compareTo(ticket2);
         Assertions.assertEquals(actual, expected);
     }
+
+    @Test //находится 0 билетов, т.е. ни один билет не подходит.
+    public void testFindZeroTickets() {
+        Ticket ticket1 = new Ticket("Шереметьево", "Владивосток", 45000, 7, 21);
+        Ticket ticket2 = new Ticket("Шереметьево", "Куба", 95000, 7, 20);
+        AviaSouls aviaSouls = new AviaSouls();
+        aviaSouls.add(ticket1);
+        aviaSouls.add(ticket2);
+        Ticket[] expected = {};
+        Ticket[] actual = aviaSouls.search("Токио", "Исландия");
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test //находится несколько билетов
+    public void testFindSomeTickets() {
+        Ticket ticket1 = new Ticket("Шереметьево", "Владивосток", 45000, 7, 21);
+        Ticket ticket2 = new Ticket("Шереметьево", "Куба", 95000, 7, 20);
+        Ticket ticket3 = new Ticket("Внуково", "Токио", 105000, 7, 23);
+        Ticket ticket4 = new Ticket("Шереметьево", "Владивосток", 50000, 10, 20);
+        AviaSouls aviaSouls = new AviaSouls();
+        aviaSouls.add(ticket1);
+        aviaSouls.add(ticket2);
+        aviaSouls.add(ticket3);
+        aviaSouls.add(ticket4);
+        Ticket[] expected = {ticket1, ticket4};
+        Ticket[] actual = aviaSouls.search("Шереметьево", "Владивосток");
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test //находится только один билет
+    public void testFindOnlyOneTicket() {
+        Ticket ticket1 = new Ticket("Шереметьево", "Владивосток", 45000, 7, 21);
+        Ticket ticket2 = new Ticket("Шереметьево", "Куба", 95000, 7, 20);
+        Ticket ticket3 = new Ticket("Внуково", "Токио", 105000, 7, 23);
+        Ticket ticket4 = new Ticket("Шереметьево", "Владивосток", 50000, 10, 20);
+        AviaSouls aviaSouls = new AviaSouls();
+        aviaSouls.add(ticket1);
+        aviaSouls.add(ticket2);
+        aviaSouls.add(ticket3);
+        aviaSouls.add(ticket4);
+        Ticket[] expected = {ticket3};
+        Ticket[] actual = aviaSouls.search("Внуково", "Токио");
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
 }
 
 
